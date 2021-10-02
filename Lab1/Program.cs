@@ -16,6 +16,9 @@ namespace Lab1
             {
                 Console.WriteLine(employee.Salutation());
                 Console.WriteLine(employee.Salutation().WordCount());
+                Console.WriteLine(employee.IsActive());
+                employee.StartDate = DateTime.Now;
+                Console.WriteLine(employee.IsActive());
             }
         }
     }
