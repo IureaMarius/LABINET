@@ -11,6 +11,7 @@ namespace BusinessLogic.Utils.DataObjects
         Boolean,
         Integer,
         Double,
+        Null,
         String
     }
 }

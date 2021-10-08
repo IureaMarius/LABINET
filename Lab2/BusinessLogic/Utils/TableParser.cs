@@ -12,16 +12,16 @@ namespace BusinessLogic.Utils
     {
         public static IEnumerable<Dictionary<string, ColumnValue>> ParseTable(TableParserConfig config)
         {
-            IEnumerable<string> lines = System.IO.File.ReadLines(config.FilePath);
+            IEnumerable<string> lines = System.IO.File.ReadLines(config.FilePath).Reverse().Skip(1).Reverse();
 
-            string[] columnHeadings = lines.First().Split((char[])null);
+            string[] columnHeadings = lines.First().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             List<Dictionary<string, ColumnValue>> result = new List<Dictionary<string, ColumnValue>>();
             foreach (string line in lines.Skip(1))
             {
                 if (String.IsNullOrEmpty(line))
                     continue;
                 Dictionary<string, ColumnValue> columnDict = new Dictionary<string, ColumnValue>();
-                string[] columns = line.Split((char[])null);
+                string[] columns = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
                 int i = 0;
                 foreach(string column in columns)
                 {
@@ -37,7 +37,11 @@ namespace BusinessLogic.Utils
                     }else if(Boolean.TryParse(columnString, out bool columnBoolValue))
                     {
                         columnValue.ValueType = ColumnValueType.Boolean;
-                    }else
+                    }else if(columnString == null)
+                    {
+                        columnValue.Value = null;
+                        columnValue.ValueType = ColumnValueType.Null;
+                    }
                     {
                         columnValue.ValueType = ColumnValueType.String;
                     }
