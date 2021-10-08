@@ -14,10 +14,14 @@ namespace Lab1
             employeeList.AddRange(new Employee[] { manager, architect });
             foreach(Employee employee in employeeList)
             {
+
                 Console.WriteLine(employee.Salutation());
                 Console.WriteLine(employee.Salutation().WordCount());
                 Console.WriteLine(employee.IsActive());
                 employee.StartDate = DateTime.Now;
+                employee.EndDate = DateTime.Now.AddDays(5);
+                Console.WriteLine(employee.IsActive());
+                employee.EndDate = null;
                 Console.WriteLine(employee.IsActive());
             }
         }

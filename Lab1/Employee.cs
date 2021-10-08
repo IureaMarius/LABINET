@@ -18,7 +18,7 @@ namespace Lab1
         }
         public bool IsActive()
         {
-            return (StartDate != null && (EndDate == null || EndDate < DateTime.Now));
+            return (StartDate != null && (EndDate == null || EndDate > DateTime.Now));
         }
         public abstract string Salutation();
     }
