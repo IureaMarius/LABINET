@@ -16,8 +16,22 @@ namespace WeatherApp
             config.IgnoreChars = ConfigurationManager.AppSettings["ignoredChars"];
 
 
-            IEnumerable<Dictionary<string, ColumnValue>>result = TableParser.ParseTable(config);
+            List<Dictionary<string, ColumnValue>> result = TableParser.ParseTable(config);
 
+            result.RemoveAt(result.Count - 1);
+            int minDifference = Int32.MaxValue;
+            int minDifferenceIndex = -1;
+            foreach(Dictionary<string, ColumnValue> line in result)
+            {
+                int difference = Math.Abs(Int32.Parse(line.GetValueOrDefault("MxT").Value) - Int32.Parse(line.GetValueOrDefault("MnT").Value));
+                if(difference < minDifference)
+                {
+                    minDifference = difference;
+                    minDifferenceIndex = Int32.Parse(line.GetValueOrDefault("Dy").Value);
+                }
+            }
+            Console.WriteLine(minDifference);
+            Console.WriteLine(minDifferenceIndex);
         }
     }
 }
